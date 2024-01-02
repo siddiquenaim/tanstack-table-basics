@@ -6,13 +6,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { columnDef, columnDefWithGrouping } from "../columns";
-import "./BasicTable.css";
+import "./GlobalFiltering.css";
 import dataJSON from "../../data/data.json";
 import { useMemo } from "react";
 
-const BasicTable = () => {
+const GlobalFiltering = () => {
   const finalData = useMemo(() => dataJSON, []);
-  const finalColumnDef = useMemo(() => columnDefWithGrouping, []);
+  const finalColumnDef = useMemo(() => columnDef, []);
 
   const tableInstance = useReactTable({
     columns: finalColumnDef, // react table uses this to understand the headers
@@ -82,4 +82,4 @@ const BasicTable = () => {
   );
 };
 
-export default BasicTable;
+export default GlobalFiltering;
