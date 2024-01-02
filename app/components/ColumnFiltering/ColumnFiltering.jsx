@@ -4,50 +4,34 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getFilteredRowModel,
 } from "@tanstack/react-table";
 import { columnDef } from "../columns";
-import "./GlobalFiltering.css";
+import "./ColumnFiltering.css";
 import dataJSON from "../../data/data.json";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
-const GlobalFiltering = () => {
+const ColumnFiltering = () => {
   const finalData = useMemo(() => dataJSON, []);
   const finalColumnDef = useMemo(() => columnDef, []);
-
-  //local state for filtering
-
-  const [filtering, setFiltering] = useState("");
 
   const tableInstance = useReactTable({
     columns: finalColumnDef, // react table uses this to understand the headers
     data: finalData, // this is the entire data
-    getCoreRowModel: getCoreRowModel(), // this hook is to have access to all the rows
-    getFilteredRowModel: getFilteredRowModel(), // this hook is for getting the filtered data
-    state: {
-      globalFilter: filtering,
-    },
-    onGlobalFilterChange: setFiltering,
+    getCoreRowModel: getCoreRowModel(), // to have access to all the rows
   });
 
   return (
     <div>
-      <div className="text-center my-4">
-        <input
-          type="text"
-          value={filtering}
-          onChange={(e) => setFiltering(e.target.value)}
-          placeholder="Filter Text"
-          className="border border-black rounded-sm py-2 px-3"
-        />
-      </div>
-
       <table>
         <thead>
           {tableInstance.getHeaderGroups().map((headerEl) => (
             <tr key={headerEl?.id}>
               {headerEl.headers.map((columnEl) => (
                 <th key={columnEl?.id} colSpan={columnEl.colSpan}>
+                  {/* {flexRender(
+                    columnEl.column.columnDef.header, //this is where the headings renders
+                    columnEl.getContext()
+                  )} */}
                   {columnEl.isPlaceholder
                     ? null
                     : flexRender(
@@ -82,10 +66,12 @@ const GlobalFiltering = () => {
             <tr key={headerEl?.id}>
               {headerEl.headers.map((columnEl) => (
                 <th key={columnEl?.id} colSpan={columnEl.colSpan}>
-                  {flexRender(
-                    columnEl.column.columnDef.header, //this is where the headings renders
-                    columnEl.getContext()
-                  )}
+                  {columnEl.isPlaceholder
+                    ? null
+                    : flexRender(
+                        columnEl.column.columnDef.header, //this is where the headings renders
+                        columnEl.getContext()
+                      )}
                 </th>
               ))}
             </tr>
@@ -96,4 +82,4 @@ const GlobalFiltering = () => {
   );
 };
 
-export default GlobalFiltering;
+export default ColumnFiltering;

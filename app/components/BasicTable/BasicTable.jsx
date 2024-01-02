@@ -27,13 +27,11 @@ const BasicTable = () => {
           {tableInstance.getHeaderGroups().map((headerEl) => (
             <tr key={headerEl?.id}>
               {headerEl.headers.map((columnEl) => (
-                <th key={columnEl?.id}>
-                  {
-                    console.log(columnEl) /* {flexRender(
+                <th key={columnEl?.id} colSpan={columnEl.colSpan}>
+                  {/* {flexRender(
                     columnEl.column.columnDef.header, //this is where the headings renders
                     columnEl.getContext()
-                  )} */
-                  }
+                  )} */}
                   {columnEl.isPlaceholder
                     ? null
                     : flexRender(
@@ -46,7 +44,7 @@ const BasicTable = () => {
           ))}
         </thead>
         <tbody>
-          {tableInstance.getCoreRowModel().rows.map((rowEl) => {
+          {tableInstance.getRowModel().rows.map((rowEl) => {
             return (
               <tr key={rowEl.id}>
                 {rowEl.getVisibleCells().map((cellEl) => {
@@ -67,11 +65,13 @@ const BasicTable = () => {
           {tableInstance.getHeaderGroups().map((headerEl) => (
             <tr key={headerEl?.id}>
               {headerEl.headers.map((columnEl) => (
-                <th key={columnEl?.id}>
-                  {flexRender(
-                    columnEl.column.columnDef.header, //this is where the headings renders
-                    columnEl.getContext()
-                  )}
+                <th key={columnEl?.id} colSpan={columnEl.colSpan}>
+                  {columnEl.isPlaceholder
+                    ? null
+                    : flexRender(
+                        columnEl.column.columnDef.header, //this is where the headings renders
+                        columnEl.getContext()
+                      )}
                 </th>
               ))}
             </tr>
