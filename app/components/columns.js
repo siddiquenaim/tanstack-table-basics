@@ -37,20 +37,6 @@ export const columnDefWithGrouping = [
     header: "ID",
   }),
 
-  // columnHelper.group({
-  //   header: "Name",
-  //   columns: [
-  //     {
-  //       accessorKey: "first_name",
-  //       header: "First Name",
-  //     },
-  //     {
-  //       accessorKey: "last_name",
-  //       header: "Last Name",
-  //     },
-  //   ],
-  // }),
-
   {
     header: "Name",
     columns: [
@@ -71,5 +57,32 @@ export const columnDefWithGrouping = [
   {
     accessorKey: "date",
     header: "Date",
+  },
+];
+
+// columnDf with filter
+
+export const columnDefWithFilter = [
+  columnHelper.accessor("id", {
+    header: "Id",
+    enableColumnFilter: false,
+  }),
+  {
+    accessorFn: (row) => `${row.first_name}`,
+    header: "First Name",
+  },
+  {
+    accessorKey: "last_name",
+    header: "Last Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    enableColumnFilter: false,
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ getValue }) => moment(new Date(getValue())).format("MMM Do YY"),
   },
 ];

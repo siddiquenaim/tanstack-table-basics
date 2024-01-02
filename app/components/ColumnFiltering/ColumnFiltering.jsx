@@ -4,20 +4,37 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
-import { columnDef } from "../columns";
+import { columnDefWithFilter } from "../columns";
 import "./ColumnFiltering.css";
 import dataJSON from "../../data/data.json";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import Filter from "@/app/functions/FilterFunction";
 
 const ColumnFiltering = () => {
   const finalData = useMemo(() => dataJSON, []);
-  const finalColumnDef = useMemo(() => columnDef, []);
+  const finalColumnDef = useMemo(() => columnDefWithFilter, []);
+  const defaultColumn = useMemo(() => {
+    return {
+      anyProp: "Hello world",
+    };
+  }, []);
+
+  //local state for column filtering
+
+  const [columnFilters, setColumnFilters] = useState([]);
 
   const tableInstance = useReactTable({
     columns: finalColumnDef, // react table uses this to understand the headers
     data: finalData, // this is the entire data
+    defaultColumn: defaultColumn, // it will be inside column>columnDef
     getCoreRowModel: getCoreRowModel(), // to have access to all the rows
+    getFilteredRowModel: getFilteredRowModel(), // this hook is for column filtering
+    state: {
+      columnFilters: columnFilters,
+    },
+    onColumnFiltersChange: setColumnFilters,
   });
 
   return (
@@ -28,16 +45,23 @@ const ColumnFiltering = () => {
             <tr key={headerEl?.id}>
               {headerEl.headers.map((columnEl) => (
                 <th key={columnEl?.id} colSpan={columnEl.colSpan}>
-                  {/* {flexRender(
-                    columnEl.column.columnDef.header, //this is where the headings renders
-                    columnEl.getContext()
-                  )} */}
-                  {columnEl.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {console.log(columnEl)}
+                  {columnEl.isPlaceholder ? null : (
+                    <>
+                      {flexRender(
                         columnEl.column.columnDef.header, //this is where the headings renders
                         columnEl.getContext()
                       )}
+                      {columnEl.column.getCanFilter() ? (
+                        <div>
+                          <Filter
+                            column={columnEl.column}
+                            table={tableInstance}
+                          />
+                        </div>
+                      ) : null}
+                    </>
+                  )}
                 </th>
               ))}
             </tr>
