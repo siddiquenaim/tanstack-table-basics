@@ -1,5 +1,5 @@
 import Image from "next/image";
-import BasicTable from "./components/BasicTable";
+import BasicTable from "./components/BasicTable/BasicTable";
 
 export default function Home() {
   return (
