@@ -68,7 +68,27 @@ const PaginationTable = () => {
         </tbody>
       </table>
       <hr />
-      <div className="flex justify-center py-7 space-x-4">
+      <div className="text-center py-2">
+        Page: {tableInstance.options.state.pagination.pageIndex + 1}/
+        {tableInstance.getPageCount()} - Page Size:{" "}
+        <input
+          type="number"
+          name="pageSize"
+          className="w-[100px] py-2 px-4 text-black rounded-md border border-gray-700"
+          placeholder="Page Size"
+          id=""
+          defaultValue={10}
+          min={1}
+          max={20}
+          // max={tableInstance.getPageCount()}
+          onChange={(e) => {
+            tableInstance.setPageSize(e.target.value);
+          }}
+        />
+      </div>
+      <hr />
+
+      <div className="flex justify-center py-3 space-x-4">
         <button
           onClick={() => tableInstance.setPageIndex(0)}
           disabled={!tableInstance.getCanPreviousPage()}
@@ -85,6 +105,19 @@ const PaginationTable = () => {
           >
             Prev
           </button>
+          <input
+            type="number"
+            name="jumpTo"
+            className="w-[100px] py-2 px-4 text-black rounded-md border border-gray-700"
+            placeholder="Jump to Page"
+            id=""
+            defaultValue={1}
+            min={1}
+            max={tableInstance.getPageCount()}
+            onChange={(e) => {
+              tableInstance.setPageIndex(e.target.value - 1);
+            }}
+          />
           <button
             // onClick={tableInstance.nextPage()}
             onClick={() => tableInstance.nextPage()}
