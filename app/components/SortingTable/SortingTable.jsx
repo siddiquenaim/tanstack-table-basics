@@ -20,14 +20,21 @@ const SortingTable = () => {
   const [sorting, setSorting] = useState([]);
 
   const tableInstance = useReactTable({
+    //Table generate data and columns
     columns: finalColumnDef, // react table uses this to understand the headers
     data: finalData, // this is the entire data
+
+    // Table core function
     getCoreRowModel: getCoreRowModel(), // to have access to all the rows
     getSortedRowModel: getSortedRowModel(),
+
+    // When change states
+    onSortingChange: setSorting,
+
+    // Update state
     state: {
       sorting: sorting,
     },
-    onSortingChange: setSorting,
   });
 
   return (

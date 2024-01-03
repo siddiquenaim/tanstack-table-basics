@@ -20,14 +20,21 @@ const GlobalFiltering = () => {
   const [filtering, setFiltering] = useState("");
 
   const tableInstance = useReactTable({
+    //Table generate data and columns
     columns: finalColumnDef, // react table uses this to understand the headers
     data: finalData, // this is the entire data
+
+    // Table core function
     getCoreRowModel: getCoreRowModel(), // this hook is to have access to all the rows
     getFilteredRowModel: getFilteredRowModel(), // this hook is for getting the filtered data
+
+    // When change states
+    onGlobalFilterChange: setFiltering,
+
+    // Update state
     state: {
       globalFilter: filtering,
     },
-    onGlobalFilterChange: setFiltering,
   });
 
   return (

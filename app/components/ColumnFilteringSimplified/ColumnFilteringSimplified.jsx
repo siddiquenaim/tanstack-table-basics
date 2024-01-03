@@ -16,11 +16,16 @@ const ColumnFilteringSimplified = () => {
   const finalColumnDef = useMemo(() => columnDef, []);
 
   const tableInstance = useReactTable({
+    //Table generate data and columns
     columns: finalColumnDef,
     data: finalData,
+
+    // Table core function
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
   });
+
+  //on er moddhe shobgulay setState dibo, first value
 
   // Define a single function to handle all filters
   const handleFilter = (columnId, value, setFilter) => {
