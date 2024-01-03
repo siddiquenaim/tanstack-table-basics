@@ -45,7 +45,6 @@ const ColumnFiltering = () => {
             <tr key={headerEl?.id}>
               {headerEl.headers.map((columnEl) => (
                 <th key={columnEl?.id} colSpan={columnEl.colSpan}>
-                  {console.log(columnEl)}
                   {columnEl.isPlaceholder ? null : (
                     <>
                       {flexRender(
