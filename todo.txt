@@ -1,2 +1,6 @@
-filtering,
-server side rendering
+1. columnDef: object literal, helper function, accessor function
+2. rendering the table: i. header data: header merging, grouping, ii. body data
+3. sorting: asc, desc, default
+4. pagination: first page, last page, next page, prev page, total pages, go to page, page size
+5. global filtering
+6. column filtering

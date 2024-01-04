@@ -15,6 +15,9 @@ const ColumnFilteringSimplified = () => {
   const finalData = useMemo(() => dataJSON, []);
   const finalColumnDef = useMemo(() => columnDef, []);
 
+  const [firstNameInput, setFirstNameInput] = useState("");
+  const [lastNameInput, setLastNameInput] = useState("");
+
   const tableInstance = useReactTable({
     //Table generate data and columns
     columns: finalColumnDef,
@@ -36,15 +39,11 @@ const ColumnFilteringSimplified = () => {
     if (filteredColumn) {
       filteredColumn.setFilterValue(value);
 
-      // Optionally, you can update the state using the provided setFilter function
       if (setFilter) {
         setFilter(value);
       }
     }
   };
-
-  const [firstNameInput, setFirstNameInput] = useState("");
-  const [lastNameInput, setLastNameInput] = useState("");
 
   return (
     <div>
