@@ -4,3 +4,14 @@
 4. pagination: first page, last page, next page, prev page, total pages, go to page, page size
 5. global filtering
 6. column filtering
+
+
+
+
+
+-- show up and down arrows as sorting for specific table
+-- button etc in table, dynamic formatting, specific column customization
+-- header accessor react table
+
+--- dynamic table: dynamic column, text inside specific column
+--- ... in column to show dropdown

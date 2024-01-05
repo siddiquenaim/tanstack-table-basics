@@ -2,7 +2,6 @@ table {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
-  border-radius: 10px;
 }
 
 table td,
@@ -24,6 +23,6 @@ tfoot td {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #ae1515;
+  background-color: #4615ae;
   color: white;
 }

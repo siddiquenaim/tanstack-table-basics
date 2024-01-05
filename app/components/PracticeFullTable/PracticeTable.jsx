@@ -18,6 +18,9 @@ const PracticeTable = () => {
 
   const [filters, setFilters] = useState("");
   const [sorting, setSorting] = useState([]);
+  const [columnVisibility, setColumnVisibility] = useState({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [selectedRowsShown, setSelectedRowsShown] = useState(false);
 
   const table = useReactTable({
     // table data
@@ -33,12 +36,19 @@ const PracticeTable = () => {
     // onchange
     onGlobalFilterChange: setFilters,
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
 
     // update state
     state: {
       globalFilter: filters,
       sorting: sorting,
+      columnVisibility: columnVisibility,
+      rowSelection: rowSelection,
     },
+
+    //enable row selection
+    enableRowSelection: true,
   });
 
   const handleFilter = (value, id) => {
@@ -215,7 +225,16 @@ const PracticeTable = () => {
           })}
         </tbody>
       </table>
-      <div className="text-center mt-5">
+      <div className="my-1">
+        total selected rows: {table.getSelectedRowModel().rows.length}
+        <button
+          className="bg-black text-white py-0.5 px-2 rounded-lg ml-2"
+          onClick={() => setSelectedRowsShown(!selectedRowsShown)}
+        >
+          {selectedRowsShown ? "Hide" : "Show"} Selected Rows
+        </button>
+      </div>
+      <div className="text-center mt-4">
         Page: {table.options.state.pagination.pageIndex + 1}/
         {table.getPageCount()} - Page Size:{" "}
         <input
@@ -244,9 +263,12 @@ const PracticeTable = () => {
           type="number"
           defaultValue={1}
           onChange={(e) => table.setPageIndex(e.target.value - 1)}
+          min={1}
+          max={table.getPageCount()}
           className="py-2 px-4 rounded-lg border border-gray-700 w-[73px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           placeholder="page"
         />
+
         <button
           onClick={() => table.nextPage()}
           className="py-2 px-4 bg-black hover:bg-gray-700 text-white rounded-full disabled:bg-gray-700"
@@ -261,6 +283,17 @@ const PracticeTable = () => {
         >
           {">>"}
         </button>
+      </div>
+
+      {/* show selected rows here */}
+      <div className={!selectedRowsShown && `hidden`}>
+        <ul>
+          {table.getSelectedRowModel().flatRows.map((el) => (
+            <li key={el.id}>
+              - {`${el.original.first_name} ${el.original.last_name}`}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

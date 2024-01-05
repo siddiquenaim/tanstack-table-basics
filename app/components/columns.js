@@ -1,9 +1,33 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import moment from "moment";
+import CheckBox from "./CheckBox/CheckBox";
 
 const columnHelper = createColumnHelper();
 
 export const columnDef = [
+  {
+    id: "select",
+    size: 40,
+    header: ({ table }) => (
+      <CheckBox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <CheckBox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   columnHelper.accessor("id", {
     header: "ID",
   }), //way-2: this is another way of defining columns
