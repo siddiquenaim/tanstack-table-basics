@@ -35,17 +35,18 @@ export const columnDef = [
     accessorKey: "first_name",
     header: "First Name", //way-1: simplest way to define columns
   },
-  {
-    accessorFn: (row) => `${row.last_name}`,
-    header: "Last Name", //way-3: third way of doing it using function, cells can be merged this way `${row.last_name} ${row.first_name}`
-  },
+  // {
+  //   accessorFn: (row) => `${row.last_name}`,
+  //   header: "Last Name", //way-3: third way of doing it using function, cells can be merged this way `${row.last_name} ${row.first_name}`
+  // },
   {
     accessorFn: (row) => `${row.first_name} ${row.last_name}`,
     header: "Full Name", // merging cells example
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "money",
+    header: "Money",
+    cell: ({ getValue }) => `${parseInt(getValue() * 100)} Taka`,
   },
   {
     accessorKey: "date",

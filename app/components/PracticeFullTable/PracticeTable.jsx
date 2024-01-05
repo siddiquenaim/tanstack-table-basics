@@ -208,7 +208,7 @@ const PracticeTable = () => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className="text-center">
           {table.getRowModel().rows.map((rowEl) => {
             return (
               <tr key={rowEl.id}>
