@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import moment from "moment";
 import CheckBox from "./CheckBox/CheckBox";
+import ConvertButton from "./ConvertButton/ConvertButton";
 
 const columnHelper = createColumnHelper();
 
@@ -43,10 +44,30 @@ export const columnDef = [
     accessorFn: (row) => `${row.first_name} ${row.last_name}`,
     header: "Full Name", // merging cells example
   },
+
   {
     accessorKey: "money",
     header: "Money",
-    cell: ({ getValue }) => `${parseInt(getValue() * 100)} Taka`,
+    cell: ({ getValue }) => (
+      <div className="text-center">{`${parseInt(getValue() * 100)} Taka`}</div>
+    ),
+  },
+  {
+    accessorFn: (row) => `${row.money}`,
+    header: "Convert to $",
+    cell: ({ getValue, row }) => (
+      <div className="text-center">
+        {/* {console.log(row)} */}
+        {
+          <ConvertButton
+            getValue={getValue}
+            onConvertClick={(convertedValue) =>
+              console.log(`Converted: ${convertedValue} USD`)
+            }
+          />
+        }
+      </div>
+    ),
   },
   {
     accessorKey: "date",

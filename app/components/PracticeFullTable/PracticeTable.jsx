@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 const PracticeTable = () => {
   const finalColumnDef = useMemo(() => columnDef, []);
@@ -202,18 +203,32 @@ const PracticeTable = () => {
                       headerCell.column.columnDef.header,
                       headerCell.getContext()
                     )}
+
+                    {/* if sorted it'll show arrows beside header */}
+                    {
+                      {
+                        asc: <FaArrowUp className="inline-block pl-1" />,
+                        desc: <FaArrowDown className="inline-block pl-1" />,
+                      }[headerCell.column.getIsSorted() ?? null]
+
+                      // Using a ternary operator to check if columnEl.column.getIsSorted() is truthy (indicating the column is sorted) or falsy (indicating the column is not sorted).
+                      // If sorted, it returns an object with properties 'asc' and 'desc',
+                      // containing strings indicating the sorting order.
+                      // If not sorted, it returns null.
+                    }
                   </th>
                 );
               })}
             </tr>
           ))}
         </thead>
-        <tbody className="text-center">
+        <tbody>
           {table.getRowModel().rows.map((rowEl) => {
             return (
               <tr key={rowEl.id}>
                 {rowEl.getVisibleCells().map((rowCell) => (
                   <td key={rowCell.id}>
+                    {/* {console.log(rowCell.row.original.money)} */}
                     {flexRender(
                       rowCell.column.columnDef.cell,
                       rowCell.getContext()

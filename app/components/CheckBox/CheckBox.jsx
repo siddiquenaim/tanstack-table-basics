@@ -11,6 +11,7 @@ const CheckBox = ({ checked, onCheckedChange, ariaLabel }) => {
         checked={checked}
         onChange={(e) => onCheckedChange(e.target.checked)}
         aria-label={ariaLabel}
+        className="cursor-pointer"
       />
     </div>
   );
