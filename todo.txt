@@ -9,7 +9,7 @@
 
 
 
--- show up and down arrows as sorting for specific table
+
 -- button etc in table, dynamic formatting, specific column customization
 -- header accessor react table
 

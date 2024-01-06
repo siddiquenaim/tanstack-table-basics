@@ -17,6 +17,8 @@ const ColumnOrderingHiding = () => {
   //local states
 
   const [columnOrder, setColumnOrder] = useState([]);
+  const [isColumnOrderChanged, setIsColumnOrderChanged] = useState(false);
+  const [columnVisibility, setColumnVisibility] = useState({});
 
   const tableInstance = useReactTable({
     //Table generate data and columns
@@ -28,23 +30,52 @@ const ColumnOrderingHiding = () => {
 
     //on change
     onColumnOrderChange: setColumnOrder,
+    onColumnVisibilityChange: setColumnVisibility,
 
     //update
     state: {
-      columnOrder: columnOrder,
+      columnOrder,
+      columnVisibility,
     },
   });
 
   return (
-    <div>
-      <div
-        onClick={() => setColumnOrder(["date", "first_name", "last_name"])}
-        className="text-center mb-5"
-      >
-        <button className="py-2 px-4 bg-black hover:bg-gray-700 text-white rounded-full disabled:bg-gray-700">
-          Change Order
-        </button>
-      </div>
+    <div className="text-center space-y-3">
+      <label>
+        <input
+          {...{
+            type: "checkbox",
+            checked: tableInstance.getIsAllColumnsVisible(),
+            onChange: tableInstance.getToggleAllColumnsVisibilityHandler(),
+          }}
+        />{" "}
+        Columns Visible
+      </label>
+      {isColumnOrderChanged ? (
+        <div
+          onClick={() => {
+            setColumnOrder([]);
+            setIsColumnOrderChanged(false);
+          }}
+          className="text-center mb-5"
+        >
+          <button className="py-2 px-4 bg-black hover:bg-gray-700 text-white rounded-full disabled:bg-gray-700">
+            Change Order
+          </button>
+        </div>
+      ) : (
+        <div
+          onClick={() => {
+            setColumnOrder(["id", "date", "email", "first_name", "last_name"]);
+            setIsColumnOrderChanged(true);
+          }}
+          className="text-center mb-5"
+        >
+          <button className="py-2 px-4 bg-black hover:bg-gray-700 text-white rounded-full disabled:bg-gray-700">
+            Default Order
+          </button>
+        </div>
+      )}
       <table>
         <thead>
           {tableInstance.getHeaderGroups().map((headerEl) => (

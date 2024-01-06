@@ -27,7 +27,7 @@ export const columnDef = [
       />
     ),
     enableSorting: false,
-    enableHiding: false,
+    // enableHiding: false,
   },
   columnHelper.accessor("id", {
     header: "ID",

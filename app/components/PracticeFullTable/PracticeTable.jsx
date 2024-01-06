@@ -63,6 +63,18 @@ const PracticeTable = () => {
 
   return (
     <div>
+      <div className="text-center mb-3 space-y-3">
+        <label>
+          <input
+            {...{
+              type: "checkbox",
+              checked: table.getIsAllColumnsVisible(),
+              onChange: table.getToggleAllColumnsVisibilityHandler(),
+            }}
+          />{" "}
+          Columns Visible
+        </label>
+      </div>
       <div className="flex justify-center py-5 gap-3">
         <div>
           <label htmlFor="" className="mr-2">
