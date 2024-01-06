@@ -71,19 +71,31 @@ const PracticeTable = () => {
       {/* control buttons */}
       <div className="my-5 flex justify-center gap-3">
         <button
-          onClick={() => setShowVisibility(!showVisibility)}
+          onClick={() => {
+            setShowVisibility(!showVisibility);
+            setShowSorting(false);
+            setShowFiltering(false);
+          }}
           className="border border-gray-600 rounded-lg px-2 py-1"
         >
           {showVisibility && "Hide"} Visibility
         </button>
         <button
-          onClick={() => setShowFiltering(!showFiltering)}
+          onClick={() => {
+            setShowFiltering(!showFiltering);
+            setShowSorting(false);
+            setShowVisibility(false);
+          }}
           className="border border-gray-600 rounded-lg px-2 py-1"
         >
           {showFiltering && "Hide"} Filtering
         </button>
         <button
-          onClick={() => setShowSorting(!showSorting)}
+          onClick={() => {
+            setShowSorting(!showSorting);
+            setShowVisibility(false);
+            setShowFiltering(false);
+          }}
           className="border border-gray-600 rounded-lg px-2 py-1"
         >
           {showSorting && "Hide"} Sorting
@@ -93,8 +105,8 @@ const PracticeTable = () => {
       {/* column visibility */}
       <div
         className={`${
-          !showVisibility ? "hidden" : "flex"
-        } "text-center mb-3 justify-center gap-2 items-center "`}
+          !showVisibility ? "hidden" : "flex lg:h-[40px] items-center"
+        } "text-center mb-3 justify-center gap-2 items-center"`}
       >
         <div>
           <label>
