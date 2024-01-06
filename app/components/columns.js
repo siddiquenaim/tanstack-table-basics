@@ -61,6 +61,7 @@ export const columnDef = [
       <div className="text-center">{<ItemsQty row={row} />}</div>
     ),
   },
+  { accessorKey: "email", header: "Email" },
   {
     accessorKey: "date",
     header: "Date",

@@ -59,11 +59,14 @@ const PracticeTable = () => {
 
   const handleFilter = (value, id) => {
     const allColumns = table.getAllColumns();
+    console.log(value, id);
     const filteredColumn = allColumns.filter(
       (selectedColumn) => selectedColumn.id === id
     )[0];
 
-    filteredColumn.setFilterValue(value);
+    if (filteredColumn) {
+      filteredColumn.setFilterValue(value);
+    }
   };
 
   return (
@@ -105,7 +108,7 @@ const PracticeTable = () => {
       {/* column visibility */}
       <div
         className={`${
-          !showVisibility ? "hidden" : "flex lg:h-[40px] items-center"
+          !showVisibility ? "hidden" : "flex lg:h-[50px] items-center"
         } "text-center mb-3 justify-center gap-2 items-center"`}
       >
         <div>
@@ -144,7 +147,7 @@ const PracticeTable = () => {
       {/* filtering */}
       <div
         className={`${
-          !showFiltering ? "hidden" : "flex"
+          !showFiltering ? "hidden" : "flex lg:h-[50px] items-center"
         } "text-center mb-3 justify-center gap-2 items-center "`}
       >
         {/* global filter */}
@@ -191,7 +194,7 @@ const PracticeTable = () => {
       {/* sorting */}
       <div
         className={`${
-          !showSorting ? "hidden" : "flex"
+          !showSorting ? "hidden" : "flex lg:h-[50px] items-center"
         } "text-center mb-3 justify-center gap-2 items-center "`}
       >
         {/* sorting by date */}
@@ -280,6 +283,15 @@ const PracticeTable = () => {
           </select>
         </div>
       </div>
+
+      {/* order changing button */}
+      {/* <div>
+        <button
+          onClick={() => table.setColumnOrder(["id", "date", "first_name"])}
+        >
+          Change order
+        </button>
+      </div> */}
 
       {/* data table */}
       <table>
