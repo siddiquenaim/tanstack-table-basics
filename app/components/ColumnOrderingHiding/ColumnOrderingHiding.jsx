@@ -51,6 +51,23 @@ const ColumnOrderingHiding = () => {
         />{" "}
         Columns Visible
       </label>
+      <hr />
+      {tableInstance.getAllLeafColumns().map((column) => {
+        return (
+          <div key={column.id}>
+            <label>
+              <input
+                {...{
+                  type: "checkbox",
+                  checked: column.getIsVisible(),
+                  onChange: column.getToggleVisibilityHandler(),
+                }}
+              />{" "}
+              {column.id}
+            </label>
+          </div>
+        );
+      })}
       {isColumnOrderChanged ? (
         <div
           onClick={() => {

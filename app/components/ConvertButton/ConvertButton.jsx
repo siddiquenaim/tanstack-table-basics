@@ -1,20 +1,35 @@
 // ConvertButton.js
-import React from "react";
+import React, { useState } from "react";
 
-const ConvertButton = ({ getValue, onConvertClick }) => {
+const ConvertButton = ({ row }) => {
+  const [money, setMoney] = useState(row.renderValue("money"));
+  const [currency, setCurrency] = useState("USD");
+
   const handleClick = () => {
-    const moneyValue = getValue();
-    const convertedValue = moneyValue;
-    onConvertClick(convertedValue);
+    // console.log("render console:", row.renderValue("money"));
+
+    if (currency === "USD") {
+      setMoney(parseFloat(money * 109.3).toFixed(2));
+      setCurrency("BDT");
+    }
+    if (currency === "BDT") {
+      setMoney(parseFloat(money / 109.3).toFixed(2));
+      setCurrency("USD");
+    }
   };
 
   return (
-    <button
-      className="py-2 px-4 bg-black hover:bg-gray-700 text-white rounded-full disabled:bg-gray-700 ml-2"
-      onClick={handleClick}
-    >
-      Convert
-    </button>
+    <>
+      <p>
+        {currency} {money}
+      </p>
+      <button
+        className="py-2 px-4 bg-black hover:bg-gray-700 text-white rounded-full disabled:bg-gray-700 ml-2"
+        onClick={handleClick}
+      >
+        Convert
+      </button>
+    </>
   );
 };
 

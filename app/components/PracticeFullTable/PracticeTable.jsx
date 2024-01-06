@@ -23,6 +23,11 @@ const PracticeTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [selectedRowsShown, setSelectedRowsShown] = useState(false);
 
+  // states to show filter options
+  const [showVisibility, setShowVisibility] = useState(false);
+  const [showFiltering, setShowFiltering] = useState(false);
+  const [showSorting, setShowSorting] = useState(false);
+
   const table = useReactTable({
     // table data
     columns: finalColumnDef,
@@ -63,19 +68,74 @@ const PracticeTable = () => {
 
   return (
     <div>
-      <div className="text-center mb-3 space-y-3">
-        <label>
-          <input
-            {...{
-              type: "checkbox",
-              checked: table.getIsAllColumnsVisible(),
-              onChange: table.getToggleAllColumnsVisibilityHandler(),
-            }}
-          />{" "}
-          Columns Visible
-        </label>
+      {/* control buttons */}
+      <div className="my-5 flex justify-center gap-3">
+        <button
+          onClick={() => setShowVisibility(!showVisibility)}
+          className="border border-gray-600 rounded-lg px-2 py-1"
+        >
+          {showVisibility && "Hide"} Visibility
+        </button>
+        <button
+          onClick={() => setShowFiltering(!showFiltering)}
+          className="border border-gray-600 rounded-lg px-2 py-1"
+        >
+          {showFiltering && "Hide"} Filtering
+        </button>
+        <button
+          onClick={() => setShowSorting(!showSorting)}
+          className="border border-gray-600 rounded-lg px-2 py-1"
+        >
+          {showSorting && "Hide"} Sorting
+        </button>
       </div>
-      <div className="flex justify-center py-5 gap-3">
+
+      {/* column visibility */}
+      <div
+        className={`${
+          !showVisibility ? "hidden" : "flex"
+        } "text-center mb-3 justify-center gap-2 items-center "`}
+      >
+        <div>
+          <label>
+            <input
+              className="cursor-pointer mr-2"
+              {...{
+                type: "checkbox",
+                checked: table.getIsAllColumnsVisible(),
+                onChange: table.getToggleAllColumnsVisibilityHandler(),
+              }}
+            />
+            All Columns Visible
+          </label>
+        </div>
+
+        <div className="flex gap-2">
+          {table.getAllLeafColumns().map((column) => (
+            <div key={column.id}>
+              <label>
+                <input
+                  className="cursor-pointer"
+                  {...{
+                    type: "checkbox",
+                    checked: column.getIsVisible(),
+                    onChange: column.getToggleVisibilityHandler(),
+                  }}
+                />{" "}
+                {column.id === "select" ? "Select" : column.columnDef.header}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* filtering */}
+      <div
+        className={`${
+          !showFiltering ? "hidden" : "flex"
+        } "text-center mb-3 justify-center gap-2 items-center "`}
+      >
+        {/* global filter */}
         <div>
           <label htmlFor="" className="mr-2">
             Global Filter:
@@ -87,6 +147,42 @@ const PracticeTable = () => {
             onChange={(e) => setFilters(e.target.value)}
           />
         </div>
+
+        {/* filter by column-email */}
+        <div>
+          <label htmlFor="email" className="mr-2">
+            Filter By Email:
+          </label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Filter Email"
+            onChange={(e) => handleFilter(e.target.value, "email")}
+            className="text-center py-2 px-4 rounded-lg border border-gray-700 w-[150px]"
+          />
+        </div>
+        {/* filters by column-first_name */}
+        <div>
+          <label htmlFor="" className="mr-2">
+            Filter by First Name:
+          </label>
+          <input
+            type="text"
+            placeholder="Filter Name"
+            className="text-center py-2 px-4 rounded-lg border border-gray-700 w-[150px]"
+            onChange={(e) => handleFilter(e.target.value, "first_name")}
+          />
+        </div>
+      </div>
+
+      {/* sorting */}
+      <div
+        className={`${
+          !showSorting ? "hidden" : "flex"
+        } "text-center mb-3 justify-center gap-2 items-center "`}
+      >
+        {/* sorting by date */}
         <div>
           <label htmlFor="sortByDate" className="mr-2">
             Sort By date:
@@ -170,36 +266,6 @@ const PracticeTable = () => {
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
-        </div>
-      </div>
-
-      {/* filters by column */}
-      <div className="mb-5 flex gap-3 justify-center text-center">
-        {/* filter by column-email */}
-        <div>
-          <label htmlFor="email" className="mr-2">
-            Filter By Email:
-          </label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Filter Email"
-            onChange={(e) => handleFilter(e.target.value, "email")}
-            className="text-center py-2 px-4 rounded-lg border border-gray-700 w-[150px]"
-          />
-        </div>
-        {/* filters by column-first_name */}
-        <div>
-          <label htmlFor="" className="mr-2">
-            Filter by First Name:
-          </label>
-          <input
-            type="text"
-            placeholder="Filter Name"
-            className="text-center py-2 px-4 rounded-lg border border-gray-700 w-[150px]"
-            onChange={(e) => handleFilter(e.target.value, "first_name")}
-          />
         </div>
       </div>
 

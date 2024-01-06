@@ -2,6 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import moment from "moment";
 import CheckBox from "./CheckBox/CheckBox";
 import ConvertButton from "./ConvertButton/ConvertButton";
+import ItemsQty from "./ItemsQty/ItemsQty";
 
 const columnHelper = createColumnHelper();
 
@@ -47,26 +48,17 @@ export const columnDef = [
 
   {
     accessorKey: "money",
+    accessorFn: (row) => `${row.money}`,
     header: "Money",
-    cell: ({ getValue }) => (
-      <div className="text-center">{`${parseInt(getValue() * 100)} Taka`}</div>
+    cell: ({ row }) => (
+      <div className="text-center">{<ConvertButton row={row} />}</div>
     ),
   },
   {
     accessorFn: (row) => `${row.money}`,
-    header: "Convert to $",
-    cell: ({ getValue, row }) => (
-      <div className="text-center">
-        {/* {console.log(row)} */}
-        {
-          <ConvertButton
-            getValue={getValue}
-            onConvertClick={(convertedValue) =>
-              console.log(`Converted: ${convertedValue} USD`)
-            }
-          />
-        }
-      </div>
+    header: "Quantity",
+    cell: ({ row }) => (
+      <div className="text-center">{<ItemsQty row={row} />}</div>
     ),
   },
   {
