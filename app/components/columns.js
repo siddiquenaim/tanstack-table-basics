@@ -3,6 +3,7 @@ import moment from "moment";
 import CheckBox from "./CheckBox/CheckBox";
 import ConvertButton from "./ConvertButton/ConvertButton";
 import ItemsQty from "./ItemsQty/ItemsQty";
+import DeleteButton from "./DeleteButton/DeleteButton";
 
 const columnHelper = createColumnHelper();
 
@@ -61,7 +62,13 @@ export const columnDef = [
       <div className="text-center">{<ItemsQty row={row} />}</div>
     ),
   },
-  { accessorKey: "email", header: "Email" },
+  // {
+  //   id: "delete",
+  //   header: "Delete",
+  //   cell: ({ row }) => {
+  //     <DeleteButton />;
+  //   },
+  // },
   {
     accessorKey: "date",
     header: "Date",

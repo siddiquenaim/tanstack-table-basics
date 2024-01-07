@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./PracticeTable.css";
 import { columnDef } from "../columns";
 import dataJSON from "../../data/data.json";
@@ -12,18 +12,26 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const PracticeTable = () => {
+  // router and paths
+  const router = useRouter();
+  const path = usePathname();
+  const searchParams = useSearchParams();
+  // const [searchParams] = useSearchParams();
+
   const finalColumnDef = useMemo(() => columnDef, []);
   const finalDataJSON = useMemo(() => dataJSON, []);
 
+  //table interaction local states
   const [filters, setFilters] = useState("");
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
   const [selectedRowsShown, setSelectedRowsShown] = useState(false);
 
-  // states to show filter options
+  // local states to show and hide table options
   const [showVisibility, setShowVisibility] = useState(false);
   const [showFiltering, setShowFiltering] = useState(false);
   const [showSorting, setShowSorting] = useState(false);
@@ -57,17 +65,50 @@ const PracticeTable = () => {
     enableRowSelection: true,
   });
 
-  const handleFilter = (value, id) => {
-    const allColumns = table.getAllColumns();
-    console.log(value, id);
-    const filteredColumn = allColumns.filter(
-      (selectedColumn) => selectedColumn.id === id
-    )[0];
+  //code for updating filters
+  useEffect(() => {
+    const initialFilters = searchParams.get("filters");
 
-    if (filteredColumn) {
-      filteredColumn.setFilterValue(value);
+    if (initialFilters) {
+      const parsedData = JSON.parse(initialFilters);
+      const id = Object.keys(parsedData)[0];
+      const value = parsedData[id];
+
+      // console.log(value, id);
+
+      const allColumns = table.getAllColumns();
+      const filteredColumn = allColumns.filter(
+        (selectedColumn) => selectedColumn.id === id
+      )[0];
+
+      if (filteredColumn) {
+        filteredColumn.setFilterValue(value);
+      }
+
+      console.log(id, value);
     }
+  }, [searchParams, table]);
+
+  //function to handle the filter
+  const handleFilter = (value, id) => {
+    const urlParams = new URLSearchParams(searchParams);
+    urlParams.set("filters", JSON.stringify({ [id]: value }));
+
+    // update search params and table state
+    const validQuery = urlParams.size > 0 ? "?" + urlParams.toString() : "";
+    router.push(path + validQuery);
   };
+
+  // const handleFilter = (value, id) => {
+  // const allColumns = table.getAllColumns();
+  // console.log(value, id);
+  // const filteredColumn = allColumns.filter(
+  //   (selectedColumn) => selectedColumn.id === id
+  // )[0];
+  // if (filteredColumn) {
+  //   filteredColumn.setFilterValue(value);
+  // }
+  // };
 
   return (
     <div>

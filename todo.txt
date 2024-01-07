@@ -4,14 +4,21 @@
 4. pagination: first page, last page, next page, prev page, total pages, go to page, page size
 5. global filtering
 6. column filtering
+7. dynamic table: dynamic column, text inside specific column
+8. button etc in table, dynamic formatting, specific column customization
 
 
 
 
 
 
--- button etc in table, dynamic formatting, specific column customization
--- header accessor react table
 
---- dynamic table: dynamic column, text inside specific column
---- ... in column to show dropdown
+
+# 07-01-2023 tasks
+
+- by default show 4 columns: select, first name, money, qty => the other properties can be shown as we click show column option
+- search using params => so when reloaded the search result doesn't get reset
+- ... in every column to show dropdown which can copy any data
+
+
+--- -- header accessor react table
