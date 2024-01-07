@@ -3,7 +3,8 @@ import moment from "moment";
 import CheckBox from "./CheckBox/CheckBox";
 import ConvertButton from "./ConvertButton/ConvertButton";
 import ItemsQty from "./ItemsQty/ItemsQty";
-import DeleteButton from "./DeleteButton/DeleteButton";
+import { BsThreeDots } from "react-icons/bs";
+import DropDown from "./DropDown/DropDown";
 
 const columnHelper = createColumnHelper();
 
@@ -62,17 +63,18 @@ export const columnDef = [
       <div className="text-center">{<ItemsQty row={row} />}</div>
     ),
   },
-  // {
-  //   id: "delete",
-  //   header: "Delete",
-  //   cell: ({ row }) => {
-  //     <DeleteButton />;
-  //   },
-  // },
+
   {
     accessorKey: "date",
     header: "Date",
     cell: ({ getValue }) => moment(new Date(getValue())).format("Do MMM  YYYY"), // cell formatting
+  },
+  {
+    accessorFn: (row) => `${row.money} ${row.email}`,
+    header: ". . .",
+    cell: ({ row }) => (
+      <div className="text-center">{<DropDown row={row} />}</div>
+    ),
   },
 ];
 

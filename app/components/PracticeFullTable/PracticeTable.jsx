@@ -19,7 +19,6 @@ const PracticeTable = () => {
   const router = useRouter();
   const path = usePathname();
   const searchParams = useSearchParams();
-  // const [searchParams] = useSearchParams();
 
   const finalColumnDef = useMemo(() => columnDef, []);
   const finalDataJSON = useMemo(() => dataJSON, []);
@@ -85,7 +84,7 @@ const PracticeTable = () => {
         filteredColumn.setFilterValue(value);
       }
 
-      console.log(id, value);
+      // console.log(id, value);
     }
   }, [searchParams, table]);
 
@@ -96,19 +95,8 @@ const PracticeTable = () => {
 
     // update search params and table state
     const validQuery = urlParams.size > 0 ? "?" + urlParams.toString() : "";
-    router.push(path + validQuery);
+    router.push(path + validQuery); //the router and path are used to update the url so the search param can work accordingly
   };
-
-  // const handleFilter = (value, id) => {
-  // const allColumns = table.getAllColumns();
-  // console.log(value, id);
-  // const filteredColumn = allColumns.filter(
-  //   (selectedColumn) => selectedColumn.id === id
-  // )[0];
-  // if (filteredColumn) {
-  //   filteredColumn.setFilterValue(value);
-  // }
-  // };
 
   return (
     <div>
@@ -205,7 +193,7 @@ const PracticeTable = () => {
         </div>
 
         {/* filter by column-email */}
-        <div>
+        {/* <div>
           <label htmlFor="email" className="mr-2">
             Filter By Email:
           </label>
@@ -217,7 +205,8 @@ const PracticeTable = () => {
             onChange={(e) => handleFilter(e.target.value, "email")}
             className="text-center py-2 px-4 rounded-lg border border-gray-700 w-[150px]"
           />
-        </div>
+        </div> */}
+
         {/* filters by column-first_name */}
         <div>
           <label htmlFor="" className="mr-2">
