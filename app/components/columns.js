@@ -71,7 +71,7 @@ export const columnDef = [
   },
   {
     accessorFn: (row) => `${row.money} ${row.email}`,
-    header: ". . .",
+    header: "Copy Data",
     cell: ({ row }) => (
       <div className="text-center">{<DropDown row={row} />}</div>
     ),

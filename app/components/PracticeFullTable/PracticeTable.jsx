@@ -95,6 +95,7 @@ const PracticeTable = () => {
 
     // update search params and table state
     const validQuery = urlParams.size > 0 ? "?" + urlParams.toString() : "";
+
     router.push(path + validQuery); //the router and path are used to update the url so the search param can work accordingly
   };
 
@@ -192,20 +193,20 @@ const PracticeTable = () => {
           />
         </div>
 
-        {/* filter by column-email */}
-        {/* <div>
-          <label htmlFor="email" className="mr-2">
-            Filter By Email:
+        {/* filter by column-date */}
+        <div>
+          <label htmlFor="date" className="mr-2">
+            Filter By date:
           </label>
           <input
             type="text"
-            name="email"
-            id="email"
-            placeholder="Filter Email"
-            onChange={(e) => handleFilter(e.target.value, "email")}
+            name="date"
+            id="date"
+            placeholder="Filter date"
+            onChange={(e) => handleFilter(e.target.value, "date")}
             className="text-center py-2 px-4 rounded-lg border border-gray-700 w-[150px]"
           />
-        </div> */}
+        </div>
 
         {/* filters by column-first_name */}
         <div>
