@@ -29,24 +29,27 @@ export const columnDef = [
         aria-label="Select row"
       />
     ),
-    enableSorting: false,
-    // enableHiding: false,
+    enableSorting: true,
+    enableHiding: true,
   },
   columnHelper.accessor("id", {
     header: "ID",
+    enableHiding: true,
+    enableHiding: true,
   }), //way-2: this is another way of defining columns
   {
     accessorKey: "first_name",
     header: "First Name", //way-1: simplest way to define columns
+    enableHiding: true,
   },
   // {
   //   accessorFn: (row) => `${row.last_name}`,
   //   header: "Last Name", //way-3: third way of doing it using function, cells can be merged this way `${row.last_name} ${row.first_name}`
   // },
-  {
-    accessorFn: (row) => `${row.first_name} ${row.last_name}`,
-    header: "Full Name", // merging cells example
-  },
+  // {
+  //   accessorFn: (row) => `${row.first_name} ${row.last_name}`,
+  //   header: "Full Name", // merging cells example
+  // },
 
   {
     accessorKey: "money",
@@ -55,6 +58,7 @@ export const columnDef = [
     cell: ({ row }) => (
       <div className="text-center">{<ConvertButton row={row} />}</div>
     ),
+    enableHiding: true,
   },
   {
     accessorFn: (row) => `${row.money}`,
@@ -62,12 +66,19 @@ export const columnDef = [
     cell: ({ row }) => (
       <div className="text-center">{<ItemsQty row={row} />}</div>
     ),
+    enableHiding: true,
   },
 
   {
     accessorKey: "date",
     header: "Date",
     cell: ({ getValue }) => moment(new Date(getValue())).format("Do MMM  YYYY"), // cell formatting
+    enableHiding: true,
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    enableHiding: true,
   },
   {
     accessorFn: (row) => `${row.money} ${row.email}`,
@@ -75,6 +86,7 @@ export const columnDef = [
     cell: ({ row }) => (
       <div className="text-center">{<DropDown row={row} />}</div>
     ),
+    enableHiding: true,
   },
 ];
 
@@ -113,7 +125,7 @@ export const columnDefWithGrouping = [
 export const columnDefWithFilter = [
   columnHelper.accessor("id", {
     header: "Id",
-    enableColumnFilter: false,
+    enableColumnFilter: true,
   }),
   {
     accessorFn: (row) => `${row.first_name}`,
@@ -126,7 +138,7 @@ export const columnDefWithFilter = [
   {
     accessorKey: "email",
     header: "Email",
-    enableColumnFilter: false,
+    enableColumnFilter: true,
   },
   {
     accessorKey: "date",

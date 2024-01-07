@@ -64,6 +64,16 @@ const PracticeTable = () => {
     enableRowSelection: true,
   });
 
+  //
+
+  useEffect(() => {
+    table.setColumnVisibility({
+      date: false,
+      id: false,
+      email: false,
+    });
+  }, [table]);
+
   //code for updating filters
   useEffect(() => {
     const initialFilters = searchParams.get("filters");
@@ -141,7 +151,7 @@ const PracticeTable = () => {
           !showVisibility ? "hidden" : "flex lg:h-[50px] items-center"
         } "text-center mb-3 justify-center gap-2 items-center"`}
       >
-        <div>
+        {/* <div>
           <label>
             <input
               className="cursor-pointer mr-2"
@@ -153,24 +163,29 @@ const PracticeTable = () => {
             />
             All Columns Visible
           </label>
-        </div>
+        </div> */}
 
-        <div className="flex gap-2">
-          {table.getAllLeafColumns().map((column) => (
-            <div key={column.id}>
-              <label>
-                <input
-                  className="cursor-pointer"
-                  {...{
-                    type: "checkbox",
-                    checked: column.getIsVisible(),
-                    onChange: column.getToggleVisibilityHandler(),
-                  }}
-                />{" "}
-                {column.id === "select" ? "Select" : column.columnDef.header}
-              </label>
-            </div>
-          ))}
+        <div className="flex gap-2 text-xl">
+          {table.getAllLeafColumns().map(
+            (column) =>
+              column.columnDef.enableHiding && (
+                <div key={column.id}>
+                  <label>
+                    <input
+                      className="cursor-pointer"
+                      {...{
+                        type: "checkbox",
+                        checked: column.getIsVisible(),
+                        onChange: column.getToggleVisibilityHandler(),
+                      }}
+                    />{" "}
+                    {column.id === "select"
+                      ? "Select"
+                      : column.columnDef.header}
+                  </label>
+                </div>
+              )
+          )}
         </div>
       </div>
 
@@ -325,7 +340,7 @@ const PracticeTable = () => {
       </div> */}
 
       {/* data table */}
-      <table>
+      <table className="text-center">
         <thead>
           {table.getHeaderGroups().map((headerEl) => (
             <tr key={headerEl.id}>

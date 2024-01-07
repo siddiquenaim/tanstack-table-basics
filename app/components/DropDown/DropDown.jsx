@@ -29,12 +29,12 @@ const DropDown = ({ row }) => {
       handleClickOutside(event);
     };
 
-    window.addEventListener("mousedown", handleClick);
+    dropdownRef.addEventListener("mousedown", handleClick);
 
     return () => {
-      window.removeEventListener("mousedown", handleClick);
+      dropdownRef.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, []); //use useRef and useState
 
   return (
     <div className="relative" ref={dropdownRef}>
